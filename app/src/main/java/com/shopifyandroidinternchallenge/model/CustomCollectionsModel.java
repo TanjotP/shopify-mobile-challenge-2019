@@ -1,15 +1,11 @@
-package com.shopifyandroidinternchallenge;
+package com.shopifyandroidinternchallenge.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CustomCollectionsListPage {
-
-    @SerializedName("custom_collections")
-    @Expose
-    private List<CustomCollectionsListPage> customCollections;
+public class CustomCollectionsModel {
 
     @SerializedName("id")
     @Expose

@@ -1,14 +1,18 @@
 package com.shopifyandroidinternchallenge;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
-import java.util.List;
+import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
+import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
+import com.shopifyandroidinternchallenge.model.CustomCollectionsModelWrapper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,48 +21,59 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView textView;
+    private static final String TAG = "MainActivity";
+    private static final String BASE_URL = "https://shopicruit.myshopify.com/admin/";
+    private RecyclerView recyclerView;
+    private ArrayList<CustomCollectionsModelWrapper> data;
+    private CustomCollectionsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.test);
+        initViews();
+    }
+
+    private void initViews() {
+        recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        loadJSON();
+    }
+
+    private void loadJSON() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://shopicruit.myshopify.com/admin/")
+                .baseUrl(BASE_URL)
+//                .baseUrl("https://earthquake.usgs.gov/fdsnws/event/1/query?")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        RestAPI jsonRestApi = retrofit.create(RestAPI.class);
+        RestAPI request = retrofit.create(RestAPI.class);
+        Call<CustomCollectionsModelWrapper> call = request.getCustomCollectionsPosts();
 
-        Call<CustomCollectionsListPage> call = jsonRestApi.getPosts();
-
-        call.enqueue(new Callback<CustomCollectionsListPage>() {
+        call.enqueue(new Callback<CustomCollectionsModelWrapper>() {
             @Override
-            public void onResponse(Call<CustomCollectionsListPage> call, Response<CustomCollectionsListPage> response) {
-                if (!response.isSuccessful()) {
-                    textView.setText("Code: " + response.code());
-                    return;
-                }
+            public void onResponse(Call<CustomCollectionsModelWrapper> call, Response<CustomCollectionsModelWrapper> response) {
+                Log.d(TAG, "onResponse: Server Response: " + response.toString());
+                Log.d(TAG, "onResponse: received information: " + response.body().toString());
 
-                CustomCollectionsListPage p = response.body();
-                textView.setText("yay");
-
-                /*List<CustomCollectionsListPage> posts = response.body();
-                for(CustomCollectionsListPage post : posts){
-                    String content = "";
-                    content += "ID: " + post.getId() + "\n";
-                    content += "TITLE: " + post.getTitle() + "\n";
-                    content += "SORT: " + post.getSortOrder() + "\n\n";
-                    textView.append(content);
+                ArrayList<CustomCollectionsModel> data = response.body().getCustomCollections();
+                adapter = new CustomCollectionsAdapter(data);
+                recyclerView.setAdapter(adapter);
+                /*for( int i = 0; i<data.size(); i++){
+                    Log.d(TAG, "onResponse: \n" +
+                            "title: " + data.get(i).getTitle() + "\n" +
+                            "handle: " + data.get(i).getHandle() + "\n" +
+                            "updateat: " + data.get(i).getUpdatedAt() + "\n" +
+                            "-------------------------------------------------------------------------\n\n");
                 }*/
             }
 
             @Override
-            public void onFailure(Call<CustomCollectionsListPage> call, Throwable t) {
-                textView.setText(t.getMessage());
+            public void onFailure(Call<CustomCollectionsModelWrapper> call, Throwable t) {
+                Log.d("Error",t.getMessage());
             }
         });
     }
