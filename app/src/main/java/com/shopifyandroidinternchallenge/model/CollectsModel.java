@@ -24,6 +24,38 @@ public class CollectsModel {
     @Expose
     private String createdAt;
 
+    public long getId() {
+        return id;
+    }
+
+    public String getCollectionId() {
+        return collectionId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getFeatured() {
+        return featured;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getSort_value() {
+        return sort_value;
+    }
+
     @SerializedName("updated_at")
     @Expose
     private String updated_at;

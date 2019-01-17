@@ -1,18 +1,22 @@
 package com.shopifyandroidinternchallenge;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
+import com.shopifyandroidinternchallenge.fragment.CollectsDetailsPageFragment;
+import com.shopifyandroidinternchallenge.fragment.CustomCollectionsListPageFragment;
+import com.shopifyandroidinternchallenge.model.CollectsModel;
+import com.shopifyandroidinternchallenge.model.CollectsModelWrapper;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModelWrapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,36 +36,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
-    }
-
-    private void initViews() {
-        recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
         loadJSON();
     }
 
     private void loadJSON() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-//                .baseUrl("https://earthquake.usgs.gov/fdsnws/event/1/query?")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RestAPI request = retrofit.create(RestAPI.class);
-        Call<CustomCollectionsModelWrapper> call = request.getCustomCollectionsPosts();
 
-        call.enqueue(new Callback<CustomCollectionsModelWrapper>() {
+        Call<CustomCollectionsModelWrapper> callCustomCollections = request.getCustomCollectionsPosts();
+
+        callCustomCollections.enqueue(new Callback<CustomCollectionsModelWrapper>() {
             @Override
             public void onResponse(Call<CustomCollectionsModelWrapper> call, Response<CustomCollectionsModelWrapper> response) {
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
                 Log.d(TAG, "onResponse: received information: " + response.body().toString());
-
+                //TODO: null check for reponse body
                 ArrayList<CustomCollectionsModel> data = response.body().getCustomCollections();
-                adapter = new CustomCollectionsAdapter(data);
-                recyclerView.setAdapter(adapter);
+                //start fragment after map completed
+                goToFragment(CustomCollectionsListPageFragment.newInstance(data));
                 /*for( int i = 0; i<data.size(); i++){
                     Log.d(TAG, "onResponse: \n" +
                             "title: " + data.get(i).getTitle() + "\n" +
@@ -76,6 +72,38 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Error",t.getMessage());
             }
         });
+
+        Call<CollectsModelWrapper> callCollects = request.getCollectsPosts();
+
+        callCollects.enqueue(new Callback<CollectsModelWrapper>() {
+            @Override
+            public void onResponse(Call<CollectsModelWrapper> call, Response<CollectsModelWrapper> response) {
+                //TODO: null check for response body
+                Log.d(TAG, "onResponse: Server Response: " + response.toString());
+                Log.d(TAG, "onResponse: received information: " + response.body().toString());
+                ArrayList<CollectsModel> data = response.body().getCustomCollects();
+                /*for( int i = 0; i<data.size(); i++){
+                    Log.d(TAG, "onResponse: \n" +
+                            "title: " + data.get(i).getCollectionId() + "\n" +
+                            "handle: " + data.get(i).getFeatured() + "\n" +
+                            "updateat: " + data.get(i).getCreatedAt() + "\n" +
+                            "-------------------------------------------------------------------------\n\n");
+                }*/
+            }
+
+            @Override
+            public void onFailure(Call<CollectsModelWrapper> call, Throwable t) {
+                Log.d("Error",t.getMessage());
+            }
+        });
     }
+
+    private void goToFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentHolder, fragment);
+        fragmentTransaction.commit();
+    }
+
 }
 

@@ -6,7 +6,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class CollectsModelWrapper {
+
     @SerializedName("collects")
     @Expose
     private ArrayList<CollectsModel> customCollects;
+
+    public ArrayList<CollectsModel> getCustomCollects() {
+        return customCollects;
+    }
 }

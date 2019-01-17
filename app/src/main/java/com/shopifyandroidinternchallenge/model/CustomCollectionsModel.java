@@ -47,6 +47,10 @@ public class CustomCollectionsModel {
     @SerializedName("admin_graphql_api_id")
     private String adminGraphApiId;
 
+    @Expose
+    @SerializedName("image")
+    private ImageModel image;
+
     public long getId() {
         return id;
     }
@@ -85,5 +89,9 @@ public class CustomCollectionsModel {
 
     public String getAdminGraphApiId() {
         return adminGraphApiId;
+    }
+
+    public ImageModel getImage() {
+        return image;
     }
 }

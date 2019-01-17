@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/card_recycler_view"
-        android:scrollbars="vertical"
+    <FrameLayout
+        android:id="@+id/fragmentHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
+
+
 
 
 </android.support.constraint.ConstraintLayout>
