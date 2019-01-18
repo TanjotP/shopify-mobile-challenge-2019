@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements CustomCollectionsListPageFragment.OnFragmentListener {
     private static final String TAG = "MainActivity";
     private static final String BASE_URL = "https://shopicruit.myshopify.com/admin/";
-    ArrayList<ProductsModel> productsArrayData;
+    private ArrayList<ProductsModel> productsArrayData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements CustomCollections
 
     @Override
     public void goOnMoreDetailsPage() {
-        ArrayList<ProductsModel> data;
         goToFragment(CollectionsDetailsPageFragment.newInstance(productsArrayData));
     }
 }

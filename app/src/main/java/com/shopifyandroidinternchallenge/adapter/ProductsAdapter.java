@@ -23,7 +23,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     public ProductsAdapter(ArrayList<ProductsModel> android) {
         this.android = android;
         this.context = context;
-
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
         holder.mProductTitle.setText(android.get(position).getTitle());
-        //holder.mInventoryText.setText(android.get(position).getVariants();
+        //holder.mInventoryText.setText(android.get(position).getVariants().size());
         //holder.mCollectionTitle.setText(android.get(position).get);
         Picasso.get().load(android.get(position).getImage().getSrc()).into(holder.mCollectionImage);
     }
