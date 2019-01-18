@@ -2,16 +2,13 @@ package com.shopifyandroidinternchallenge.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shopifyandroidinternchallenge.R;
-import com.shopifyandroidinternchallenge.fragment.CollectionsDetailsPageFragment;
 import com.shopifyandroidinternchallenge.fragment.CustomCollectionsListPageFragment;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import com.squareup.picasso.Picasso;
@@ -34,7 +31,7 @@ public class CustomCollectionsAdapter extends RecyclerView.Adapter<CustomCollect
 
     @Override
     public CustomCollectionsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_collections_list_page_card_row,parent,false);
         return new ViewHolder(view);
     }
 

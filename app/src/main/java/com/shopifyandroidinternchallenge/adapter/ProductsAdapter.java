@@ -9,40 +9,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shopifyandroidinternchallenge.R;
-import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import com.shopifyandroidinternchallenge.model.ProductsModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
+
     private Context context;
 
     private ArrayList<ProductsModel> android;
-    private RecyclerViewClickListener mListener;
 
-    public ProductsAdapter(ArrayList<ProductsModel> android, RecyclerViewClickListener listener) {
+    public ProductsAdapter(ArrayList<ProductsModel> android) {
         this.android = android;
         this.context = context;
-        mListener = listener;
 
     }
 
     @Override
     public ProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_row,parent,false);
-        return new ViewHolder(view, mListener);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collections_details_page_card_row,parent,false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder) {
-            ViewHolder rowHolder = (ViewHolder) holder;
-            //set values of data here
-            holder.mTitle.setText(android.get(position).getTitle());
-            holder.mUpdateAt.setText(android.get(position).getUpdatedAt());
-            Picasso.get().load(android.get(position).getImage().getSrc()).into(holder.mImage);
-        }
+        holder.mProductTitle.setText(android.get(position).getTitle());
+        //holder.mInventoryText.setText(android.get(position).getVariants();
+        //holder.mCollectionTitle.setText(android.get(position).get);
+        Picasso.get().load(android.get(position).getImage().getSrc()).into(holder.mCollectionImage);
     }
 
     @Override
@@ -50,35 +45,26 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         return android.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView mTitle;
-        private TextView mSortOrder;
-        private TextView mUpdateAt;
-        private ImageView mImage;
-        private RecyclerViewClickListener mListener;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView mProductTitle;
+        private TextView mInventoryText;
+        private TextView mCollectionTitle;
+        private ImageView mCollectionImage;
 
 
-        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
+        public ViewHolder(View itemView){
             super(itemView);
             context = itemView.getContext();
-            mListener = listener;
-            mTitle = (TextView)itemView.findViewById(R.id.tv_name);
-            mSortOrder = (TextView)itemView.findViewById(R.id.tv_version);
-            mUpdateAt = (TextView)itemView.findViewById(R.id.tv_api_level);
-            mImage = (ImageView)itemView.findViewById(R.id.image_view);
-            itemView.setOnClickListener(this);
+            mProductTitle = (TextView)itemView.findViewById(R.id.productTitleText);
+            mInventoryText = (TextView)itemView.findViewById(R.id.inventoryText);
+            mCollectionTitle = (TextView)itemView.findViewById(R.id.collectionTitleText);
+            mCollectionImage = (ImageView)itemView.findViewById(R.id.collectionImage);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
         }
-
-        @Override
-        public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition());
-        }
     }
-
-
-    public interface RecyclerViewClickListener {
-        void onClick(View view, int position);
-    }
-
 }

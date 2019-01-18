@@ -41,7 +41,7 @@ public class ProductsModel {
 
     @SerializedName("variants")
     @Expose
-    private ArrayList<VariantsModel> variants;
+    private VariantsModelWrapper variants;
 
     @SerializedName("image")
     @Expose
@@ -83,7 +83,7 @@ public class ProductsModel {
         return image;
     }
 
-    public ArrayList<VariantsModel> getVariants() {
+    public VariantsModelWrapper getVariants() {
         return variants;
     }
 }

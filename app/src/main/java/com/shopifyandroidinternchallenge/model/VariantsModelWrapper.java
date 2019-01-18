@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ProductsModelWrapper {
-    @SerializedName("products")
+public class VariantsModelWrapper {
+    @SerializedName("variants")
     @Expose
-    private ArrayList<ProductsModel> products;
+    private ArrayList<VariantsModel> variants;
 
-    public ArrayList<ProductsModel> getProducts() {
-        return products;
+    public ArrayList<VariantsModel> getVariants() {
+        return variants;
     }
 }
