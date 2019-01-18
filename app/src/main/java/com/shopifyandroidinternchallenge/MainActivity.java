@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
+import com.shopifyandroidinternchallenge.fragment.CollectionsDetailsPageFragment;
 import com.shopifyandroidinternchallenge.fragment.CustomCollectionsListPageFragment;
 import com.shopifyandroidinternchallenge.model.CollectsModel;
 import com.shopifyandroidinternchallenge.model.CollectsModelWrapper;
@@ -17,6 +18,7 @@ import com.shopifyandroidinternchallenge.model.CustomCollectionsModelWrapper;
 import com.shopifyandroidinternchallenge.model.ProductsModel;
 import com.shopifyandroidinternchallenge.model.ProductsModelWrapper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -25,18 +27,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomCollectionsListPageFragment.OnFragmentListener {
     private static final String TAG = "MainActivity";
     private static final String BASE_URL = "https://shopicruit.myshopify.com/admin/";
-    private RecyclerView recyclerView;
-    private ArrayList<CustomCollectionsModelWrapper> data;
-    private CustomCollectionsAdapter adapter;
-
+    ArrayList<ProductsModel> productsArrayData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         loadJSON();
     }
 
@@ -59,13 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<CustomCollectionsModel> data = response.body().getCustomCollections();
                 //start fragment after map completed
                 goToFragment(CustomCollectionsListPageFragment.newInstance(data));
-                /*for( int i = 0; i<data.size(); i++){
-                    Log.d(TAG, "onResponse: \n" +
-                            "title: " + data.get(i).getTitle() + "\n" +
-                            "handle: " + data.get(i).getHandle() + "\n" +
-                            "updateat: " + data.get(i).getUpdatedAt() + "\n" +
-                            "-------------------------------------------------------------------------\n\n");
-                }*/
             }
 
             @Override
@@ -106,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO: null check for response body
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
                 Log.d(TAG, "onResponse: received information: " + response.body().toString());
-                ArrayList<ProductsModel> data = response.body().getProducts();
+                productsArrayData = response.body().getProducts();
                 /*for( int i = 0; i<data.size(); i++){
                     Log.d(TAG, "onResponse: \n" +
                             "title: " + data.get(i).getImage().getSrc() + "\n" +
@@ -130,5 +121,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void goOnMoreDetailsPage() {
+        ArrayList<ProductsModel> data;
+        goToFragment(CollectionsDetailsPageFragment.newInstance(productsArrayData));
+    }
 }
 

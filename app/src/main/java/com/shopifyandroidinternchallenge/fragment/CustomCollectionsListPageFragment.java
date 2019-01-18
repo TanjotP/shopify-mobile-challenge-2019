@@ -1,5 +1,6 @@
 package com.shopifyandroidinternchallenge.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,8 +20,10 @@ import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import java.util.ArrayList;
 
 public class CustomCollectionsListPageFragment extends Fragment {
+    private OnFragmentListener mListener;
     private ArrayList<CustomCollectionsModel> customCollectionData;
     private RecyclerView mRecyclerView;
+    CustomCollectionsAdapter mAdapter;
 
     public CustomCollectionsListPageFragment() {
     }
@@ -38,26 +41,37 @@ public class CustomCollectionsListPageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.custom_collections_list_page, container, false);
-        mRecyclerView =  (RecyclerView) v.findViewById(R.id.card_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-        CustomCollectionsAdapter.RecyclerViewClickListener listener = (view, position) -> {
-            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
-            
-        };
-        CustomCollectionsAdapter mAdapter = new CustomCollectionsAdapter(customCollectionData, listener );
-        mRecyclerView.setAdapter(mAdapter);
-        return v;
-    }
+        return inflater.inflate(R.layout.custom_collections_list_page, container, false);    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
+
+        mRecyclerView = view.findViewById(R.id.card_recycler_view);
+        mAdapter = new CustomCollectionsAdapter(customCollectionData ,mListener);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initView() {
-        //adapter.addOrders2017(ordersIn2017);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentListener) {
+            mListener = (OnFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentListener");
+        }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentListener {
+        void goOnMoreDetailsPage();
+    }
+
 }
