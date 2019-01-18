@@ -9,12 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
-import com.shopifyandroidinternchallenge.fragment.CollectsDetailsPageFragment;
 import com.shopifyandroidinternchallenge.fragment.CustomCollectionsListPageFragment;
 import com.shopifyandroidinternchallenge.model.CollectsModel;
 import com.shopifyandroidinternchallenge.model.CollectsModelWrapper;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModelWrapper;
+import com.shopifyandroidinternchallenge.model.ProductsModel;
+import com.shopifyandroidinternchallenge.model.ProductsModelWrapper;
 
 import java.util.ArrayList;
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO: null check for response body
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
                 Log.d(TAG, "onResponse: received information: " + response.body().toString());
-                ArrayList<CollectsModel> data = response.body().getCustomCollects();
+                ArrayList<CollectsModel> data = response.body().getCollects();
                 /*for( int i = 0; i<data.size(); i++){
                     Log.d(TAG, "onResponse: \n" +
                             "title: " + data.get(i).getCollectionId() + "\n" +
@@ -96,9 +97,33 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Error",t.getMessage());
             }
         });
+
+        Call<ProductsModelWrapper> callProducts = request.getProductsPost();
+
+        callProducts.enqueue(new Callback<ProductsModelWrapper>() {
+            @Override
+            public void onResponse(Call<ProductsModelWrapper> call, Response<ProductsModelWrapper> response) {
+                //TODO: null check for response body
+                Log.d(TAG, "onResponse: Server Response: " + response.toString());
+                Log.d(TAG, "onResponse: received information: " + response.body().toString());
+                ArrayList<ProductsModel> data = response.body().getProducts();
+                /*for( int i = 0; i<data.size(); i++){
+                    Log.d(TAG, "onResponse: \n" +
+                            "title: " + data.get(i).getImage().getSrc() + "\n" +
+                            "handle: " + data.get(i).getTitle() + "\n" +
+                            "updateat: " + data.get(i).getTags() + "\n" +
+                            "-------------------------------------------------------------------------\n\n");
+                }*/
+            }
+
+            @Override
+            public void onFailure(Call<ProductsModelWrapper> call, Throwable t) {
+                Log.d("Error",t.getMessage());
+            }
+        });
     }
 
-    private void goToFragment(Fragment fragment) {
+    public void goToFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentHolder, fragment);

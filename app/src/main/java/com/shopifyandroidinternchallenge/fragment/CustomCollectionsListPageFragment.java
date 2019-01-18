@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.shopifyandroidinternchallenge.MainActivity;
 import com.shopifyandroidinternchallenge.R;
 import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
@@ -43,6 +44,7 @@ public class CustomCollectionsListPageFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         CustomCollectionsAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+            
         };
         CustomCollectionsAdapter mAdapter = new CustomCollectionsAdapter(customCollectionData, listener );
         mRecyclerView.setAdapter(mAdapter);

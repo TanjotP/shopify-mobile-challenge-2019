@@ -27,28 +27,29 @@ public class CustomCollectionsModel {
     @Expose
     private String bodyHtml;
 
-    @Expose
     @SerializedName("published_at")
+    @Expose
     private String publishedAt;
 
-    @Expose
     @SerializedName("template_suffix")
+    @Expose
     private String templateSuffix;
 
-    @Expose
     @SerializedName("sort_order")
+    @Expose
     private String sortOrder;
 
-    @Expose
     @SerializedName("published_scope")
+    @Expose
     private String publishedScope;
 
-    @Expose
     @SerializedName("admin_graphql_api_id")
+    @Expose
+
     private String adminGraphApiId;
 
-    @Expose
     @SerializedName("image")
+    @Expose
     private ImageModel image;
 
     public long getId() {

@@ -5,13 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class CollectsModelWrapper {
-
+public class ProductsModelWrapper {
     @SerializedName("collects")
     @Expose
-    private ArrayList<CollectsModel> collects;
+    private ArrayList<ProductsModel> products;
 
-    public ArrayList<CollectsModel> getCollects() {
-        return collects;
+    public ArrayList<ProductsModel> getProducts() {
+        return products;
     }
 }

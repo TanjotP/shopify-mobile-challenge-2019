@@ -13,15 +13,15 @@ import com.shopifyandroidinternchallenge.model.CollectsModel;
 
 import java.util.ArrayList;
 
-public class CollectsDetailsPageFragment extends Fragment {
+public class CollectionsDetailsPageFragment extends Fragment {
     private ArrayList<CollectsModel> collectsData;
     private RecyclerView mRecyclerView;
 
-    public CollectsDetailsPageFragment() {
+    public CollectionsDetailsPageFragment() {
     }
 
-    public static CollectsDetailsPageFragment newInstance(ArrayList<CollectsModel> collectsData) {
-        CollectsDetailsPageFragment fragment = new CollectsDetailsPageFragment();
+    public static CollectionsDetailsPageFragment newInstance(ArrayList<CollectsModel> collectsData) {
+        CollectionsDetailsPageFragment fragment = new CollectionsDetailsPageFragment();
         fragment.collectsData = collectsData;
         return fragment;
     }

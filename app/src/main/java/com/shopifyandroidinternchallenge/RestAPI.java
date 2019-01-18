@@ -3,6 +3,7 @@ package com.shopifyandroidinternchallenge;
 import com.shopifyandroidinternchallenge.model.CollectsModelWrapper;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModelWrapper;
+import com.shopifyandroidinternchallenge.model.ProductsModelWrapper;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +14,8 @@ public interface RestAPI {
 
     @GET("collects.json?collection_id=68424466488&page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6")
     Call<CollectsModelWrapper> getCollectsPosts();
+
+    @GET("products.json?ids=2759137027,2759143811&page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6")
+    Call<ProductsModelWrapper> getProductsPost();
 
 }
