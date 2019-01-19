@@ -13,7 +13,6 @@ public class VariantsModel {
     @Expose
     private int inventoryQuantity;
 
-
     public String getTitle() {
         return title;
     }

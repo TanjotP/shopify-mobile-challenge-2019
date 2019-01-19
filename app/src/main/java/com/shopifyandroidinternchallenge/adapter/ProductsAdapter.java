@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
     private Context context;
-
     private ArrayList<ProductsModel> android;
 
     public ProductsAdapter(ArrayList<ProductsModel> android) {
@@ -34,7 +33,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
         holder.mProductTitle.setText(android.get(position).getTitle());
-        //holder.mInventoryText.setText(android.get(position).getVariants().size());
+        holder.mInventoryText.setText(totalInventory(position));
         //holder.mCollectionTitle.setText(android.get(position).get);
         Picasso.get().load(android.get(position).getImage().getSrc()).into(holder.mCollectionImage);
     }
@@ -65,5 +64,16 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             });
 
         }
+    }
+
+    private String totalInventory(int mPos){
+        int sum=0;
+
+        for(int i = 0; i < android.size(); i++){
+            sum += android.get(mPos).getVariants().get(i).getInventoryQuantity();
+        }
+
+        return Integer.toString(sum);
+
     }
 }

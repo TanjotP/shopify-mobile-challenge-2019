@@ -39,13 +39,21 @@ public class ProductsModel {
     @Expose
     private String tags;
 
-    @SerializedName("image")
+    @SerializedName("images")
     @Expose
-    private ImageModel image;
+    private ArrayList<ImageModel> images;
 
     @SerializedName("variants")
     @Expose
     private ArrayList<VariantsModel> variants;
+
+    @SerializedName("options")
+    @Expose
+    private ArrayList<OptionsModel> options;
+
+    @SerializedName("image")
+    @Expose
+    private ImageModel image;
 
     public long getId() {
         return id;
@@ -85,5 +93,13 @@ public class ProductsModel {
 
     public ArrayList<VariantsModel> getVariants() {
         return variants;
+    }
+
+    public ArrayList<ImageModel> getImages() {
+        return images;
+    }
+
+    public ArrayList<OptionsModel> getOptions() {
+        return options;
     }
 }
