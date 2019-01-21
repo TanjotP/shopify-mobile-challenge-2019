@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,18 @@ import android.widget.Toast;
 import com.shopifyandroidinternchallenge.MainActivity;
 import com.shopifyandroidinternchallenge.R;
 import com.shopifyandroidinternchallenge.adapter.CustomCollectionsAdapter;
+import com.shopifyandroidinternchallenge.model.CollectsModel;
 import com.shopifyandroidinternchallenge.model.CustomCollectionsModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CustomCollectionsListPageFragment extends Fragment {
     private OnFragmentListener mListener;
     private ArrayList<CustomCollectionsModel> customCollectionData;
     private RecyclerView mRecyclerView;
-    CustomCollectionsAdapter mAdapter;
+    private CustomCollectionsAdapter mAdapter;
+    private Long interJoinId;
 
     public CustomCollectionsListPageFragment() {
     }
@@ -71,7 +75,8 @@ public class CustomCollectionsListPageFragment extends Fragment {
     }
 
     public interface OnFragmentListener {
-        void goOnMoreDetailsPage();
+        void goOnMoreDetailsPage(Long interJoinId);
     }
+
 
 }

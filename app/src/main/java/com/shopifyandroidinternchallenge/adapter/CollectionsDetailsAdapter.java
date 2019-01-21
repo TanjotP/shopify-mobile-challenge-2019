@@ -2,6 +2,7 @@ package com.shopifyandroidinternchallenge.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,33 +15,33 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
+public class CollectionsDetailsAdapter extends RecyclerView.Adapter<CollectionsDetailsAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<ProductsModel> android;
+    private ArrayList<ProductsModel> mProductsData;
 
-    public ProductsAdapter(ArrayList<ProductsModel> android) {
-        this.android = android;
+    public CollectionsDetailsAdapter(ArrayList<ProductsModel> data) {
+        this.mProductsData = data;
         this.context = context;
     }
 
     @Override
-    public ProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CollectionsDetailsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collections_details_page_card_row,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
-        holder.mProductTitle.setText(android.get(position).getTitle());
+    public void onBindViewHolder(CollectionsDetailsAdapter.ViewHolder holder, int position) {
+        holder.mProductTitle.setText(mProductsData.get(position).getTitle());
         holder.mInventoryText.setText(totalInventory(position));
         //holder.mCollectionTitle.setText(android.get(position).get);
-        Picasso.get().load(android.get(position).getImage().getSrc()).into(holder.mCollectionImage);
+        Picasso.get().load(mProductsData.get(position).getImage().getSrc()).into(holder.mCollectionImage);
     }
 
     @Override
     public int getItemCount() {
-        return android.size();
+        return mProductsData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,6 +61,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //no-op
                 }
             });
 
@@ -68,12 +70,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     private String totalInventory(int mPos){
         int sum=0;
-
-        for(int i = 0; i < android.size(); i++){
-            sum += android.get(mPos).getVariants().get(i).getInventoryQuantity();
+        for(int i = 0; i < mProductsData.get(mPos).getVariants().size(); i++){
+            sum += mProductsData.get(mPos).getVariants().get(i).getInventoryQuantity();
         }
-
         return Integer.toString(sum);
-
     }
 }

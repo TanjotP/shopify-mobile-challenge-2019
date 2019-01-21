@@ -9,7 +9,7 @@ public class CustomCollectionsModel {
 
     @SerializedName("id")
     @Expose
-    private long id;
+    private Long id;
 
     @SerializedName("handle")
     @Expose
@@ -52,7 +52,7 @@ public class CustomCollectionsModel {
     @Expose
     private ImageModel image;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

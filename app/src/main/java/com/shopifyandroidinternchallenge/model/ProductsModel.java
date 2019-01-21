@@ -9,7 +9,7 @@ public class ProductsModel {
 
     @SerializedName("id")
     @Expose
-    private long id;
+    private Long id;
 
     @SerializedName("title")
     @Expose
@@ -55,7 +55,7 @@ public class ProductsModel {
     @Expose
     private ImageModel image;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -6,13 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shopifyandroidinternchallenge.R;
-import com.shopifyandroidinternchallenge.adapter.ProductsAdapter;
+import com.shopifyandroidinternchallenge.adapter.CollectionsDetailsAdapter;
 import com.shopifyandroidinternchallenge.model.ProductsModel;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class CollectionsDetailsPageFragment extends Fragment {
     private static final String TAG = "CollectionsFrag";
     private ArrayList<ProductsModel> productsData;
     private RecyclerView mRecyclerView;
-    ProductsAdapter mAdapter;
+    private CollectionsDetailsAdapter mAdapter;
 
     public CollectionsDetailsPageFragment() {
     }
@@ -46,7 +45,7 @@ public class CollectionsDetailsPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.card_recycler_view);
-        mAdapter = new ProductsAdapter(productsData);
+        mAdapter = new CollectionsDetailsAdapter(productsData);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
     }

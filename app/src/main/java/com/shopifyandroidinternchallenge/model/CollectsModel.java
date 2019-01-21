@@ -6,15 +6,15 @@ import com.google.gson.annotations.SerializedName;
 public class CollectsModel {
     @SerializedName("id")
     @Expose
-    private long id;
+    private Long id;
 
     @SerializedName("collection_id")
     @Expose
-    private String collectionId;
+    private Long collectionId;
 
     @SerializedName("product_id")
     @Expose
-    private String productId;
+    private Long productId;
 
     @SerializedName("featured")
     @Expose
@@ -24,15 +24,15 @@ public class CollectsModel {
     @Expose
     private String createdAt;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public String getCollectionId() {
+    public Long getCollectionId() {
         return collectionId;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
